@@ -48,11 +48,14 @@ const goalAT2014 = fifaData.map(function(goals){
 `data` as an argument and returns an array of 
 objects with only finals data */
 
-const getFinals = fifaData.filter((stage) => {
-    return stage.Stage === 'Final';
-});
+function getFinals(data){
+    return data.filter(obj => obj.Stage ==='Final')
+}
+// const getFinals = fifaData.filter((stage) => {
+//     return stage.Stage === 'Final';
+// });
 
-console.log(getFinals);
+console.log(getFinals(fifaData));
 
 // const finalArr = [];
 // function getFinals(arr) {
@@ -71,18 +74,23 @@ called `getYears` that accepts the callback
 function `getFinals`, and returns an array 
 called `years` containing all of the years in the dataset */
 
-const years = [];
+function getYears(callBack, data){
+    return callBack(data).map(element => element.Year)
+}
 
-function getYears(arr) {
-    for(let i = 0; i < arr; i++){
-        let mappedObj = {};
-        mappedObj.city = arr[i].Year;
-        years.push(mappedObj);
-        } console.log(years);
+console.log(getYears(getFinals, fifaData));
+
+// function getYears(arr) {
+//     const years = [];
+//     for(let i = 0; i < arr; i++){
+//         let mappedObj = {};
+//         mappedObj.city = arr[i].Year;
+//         years.push(mappedObj);
+//         } console.log(years);
     
-}   
+// }   
 
-console.log(getYears(getFinals));
+// console.log(getYears(getFinals));
 
 
 
@@ -95,13 +103,19 @@ console.log(getYears(getFinals));
 of each `finals` game. Return the name of all winning 
 countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
-
-    /* code here */
-
+function getWinners(callback, data) {
+    let winners = [];
+    return callback(data).map(name => {
+        if(name['Home Team Goals'] > name['Away Team Goals']){
+            winners.push(name['Home Team Name']);
+        }
+        else {
+            winners.push(name['Away Team Name'])
+        }
+    }); return winners;
 };
 
-getWinners();
+console.log(getWinners(getFinals, fifaData));
 
 /* Task 5: Implement a higher-order function called `getWinnersByYear` that accepts the following parameters and returns a set of strings "In {year}, {country} won the world cup!" 
 

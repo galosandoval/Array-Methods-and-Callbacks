@@ -128,16 +128,13 @@ Parameters:
  * callback function getYears
  */
 
-function getWinnersByYear(callBack, cb2, data) {
-    let winningYear = callBack(getFinals, data);
-    let winningTeam = cb2(getFinals, data);
-    for(let i = 0; i < data.length; i++){
-        data[i] = `In ${winningYear}, ${winningTeam} won the world cup!`;
-    }
-    console.log(data);
-
-    
-};
+// function getWinnersByYear(callBack, cb2, data) {
+//     let winningYear = callBack(getFinals, data);
+//     let winningTeam = cb2(getFinals, data);
+//     for(let i = 0; i <= data.length; i++){
+//         console.log(`In ${winningYear[i]}, ${winningTeam[i]} won the world cup!`);
+//     }  
+// };
 
 // console.log(getWinnersByYear(getYears, getWinners, fifaData));
 
@@ -150,15 +147,36 @@ team goals and away team goals scored per match
 //     let avg = data.reduce((accumulate, item) => accumulate + item)
 // };
 
+// function getAverageGoals(data){
+// const homeSum = fifaData.reduce(function(accumulator, item){
+//     console.log(accumulator + item['Home Team Goals']);
+//   }, 0);
+// }
+
 function getAverageGoals(data) {
-const avg = data.reduce(function(accumulator, item){
-    let homeSum = accumulator + item['Home Team Goals'];
-    let homeavg = homeSum / data.length;
-    let awaySum = accumulator + item['Away Team Goals'];
-    let awayAvg = awaySum / data.length;
+    const homeGoals = (data.reduce(function(acc, val) {
+        return acc + val['Home Team Goals'];
+     }, 0)) /data.length;
+    const awayGoals = (data.reduce(function(acc, val) {
+        return acc + val['Away Team Goals']; 
+    }, 0))/data.length;
+    return `home :${homeGoals} and away: ${awayGoals}`
+};
+console.log(getAverageGoals(fifaData));
+
+// function getAverageGoals(data) {
+//     const homeSum = data.reduce(function(accumulator, item){
+//         return accumulator + item['Home Team Goals'];
+//     }, 0);
+// }
     
-  }, 0); return avg;
-}
+
+
+//     const awaySum = data.reduce(function(accumulator, item){
+//         return accumulator + item['Away Team Goals'];
+//     }, 0);
+// };
+
 
 console.log(getAverageGoals(fifaData));
 
